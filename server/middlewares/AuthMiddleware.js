@@ -1,0 +1,13 @@
+import { request, response } from "express";
+import jwt from "jsonwebtoken";
+
+//Überprüft ob es ein Token gibt bzw. ob er noch valide ist.
+export const verifyToken = (request, response, next) => {
+    const token = request.cookies.jwt;
+    if (!token) return response.status(401).send("You are not authenticated!");
+    jwt.verify(token, process.env.JWT_KEY, async(err,payload)=> {
+        if(err) return response.status(403).send("Token is not valid!");
+        request.userId = payload.userId;
+        next();
+    });
+};

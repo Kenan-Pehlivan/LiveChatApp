@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import { genSalt } from "bcrypt";
+import { genSalt, hash } from "bcrypt";
 
-
+//Schema für die Speicherung der Nuterdaten in der DB
 const userSchema = new mongoose.Schema({
     email:{
         type:String,
@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
         required:false,
     },
 
-    LastName:{
+    lastName:{
         type:String,
         required:false,
     },
@@ -37,10 +37,10 @@ const userSchema = new mongoose.Schema({
     },
 })
 
-
-userSchmea.pre("save", async function(next){
+//Um den Passwort verschlüsst zu speichern
+userSchema.pre("save", async function(next){
     const salt = await genSalt();
-    this.password=await hash(this.password, salt);
+    this.password = await hash(this.password, salt);
     next(); 
 });
 

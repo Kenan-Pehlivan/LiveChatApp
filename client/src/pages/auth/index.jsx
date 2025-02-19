@@ -4,17 +4,74 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
+import { toast } from "sonner";
+import {apiClient} from "@/lib/api-client";
+import { LOGIN_ROUTE, SIGNUP_ROUTE } from "@/utils/constants";
+import { useNavigate } from "react-router-dom";
+import { useAppStore } from "@/store";
 
 
 const Auth = () => {
+    const navigate = useNavigate();
+    const {setUserInfo} = useAppStore();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
 
-    const [email, setemail] = useState("")
-    const [password, setpassword] = useState("")
-    const [confirmPassword, setconfirmPassword] = useState("");
+    //Überprüfe ob alle Angaben beim Regestrieren richtig sind
+    const validateLogin = () => {
+      if (!email.length) {
+        toast.error("Email ist required.");
+        return false;
+      }
+      if(!password.length) {
+        toast.error("Password is required.");
+        return false;
+      }
+      
+      return true;
+    };
 
-    const handleLogin = async ()=> {};
+    //Überprüfe ob alle Angaben beim Regestrieren richtig sind
+    const validateSingup = () => {
+      if (!email.length) {
+        toast.error("Email ist required.");
+        return false;
+      }
+      if(!password.length) {
+        toast.error("Password is required.");
+        return false;
+      }
+      if(password !== confirmPassword) {
+        toast.error("Password and confirm Password should be same.");
+        return false;
+      }
+      return true;
+    };
 
-    const handleSignup = async () => {};
+    const handleLogin = async ()=> {
+      if (validateLogin()) {
+        const response = await apiClient.post(LOGIN_ROUTE, {email, password}, {withCredentials:true});
+        if(response.data.user.id) {
+          setUserInfo(response.data.user);
+          if (response.data.user.profileSetup) navigate ("/chat");
+          else navigate ("/profile");
+        }
+        console.log({response});
+      }
+
+    };
+
+    const handleSignup = async () => {
+      if (validateSingup()) {
+        const response = await apiClient.post(SIGNUP_ROUTE, {email, password}, {withCredentials:true});
+        if(response.status===201) {
+          setUserInfo(response.data.user);
+          navigate("/profile");
+        }
+        console.log({response});
+      }
+    };
 
 
 
@@ -32,7 +89,8 @@ const Auth = () => {
             <p className="font-medium text-center"> Starte mit unserer Chatapp!</p>
           </div>
           <div className="flex items-center justify-center w-full">
-            <Tabs className="w-3/4">
+            
+            <Tabs className="w-3/4" defaultValue="login">
               <TabsList className="bg-transparent rounded-none w-full">
                 <TabsTrigger value="login"
                 className="data-[state=active]:bg-transparent text-black text-opacity-90 border-b-2 rounded-none w-full data-[state=active]:text-black data-[state=active]:fontsemibold data-[state=active]:border-b-purple-500 p-3 transition-all duration-300 "
@@ -49,39 +107,39 @@ const Auth = () => {
                    type="email" 
                    className="rounded-full p-6" 
                    value={email} 
-                   onChange={(e)=>setemail(e.target.value)} 
+                   onChange={(e)=>setEmail(e.target.value)} 
                   />
                   <Input 
                    placeholder="Password"
                    type="password" 
                    className="rounded-full p-6" 
                    value={password} 
-                   onChange={(e)=>setpassword(e.target.value)} 
+                   onChange={(e)=>setPassword(e.target.value)} 
                   /> 
                   <Button className="rounded-full p-6" onClick={handleLogin}>Login </Button>
                 </TabsContent>
                   
-                <TabsContent className="flex flex-col gap-5 mt-10" value="signup" >
+                <TabsContent className="flex flex-col gap-5" value="signup" >
                   <Input 
                    placeholder="Email"
                    type="email" 
                    className="rounded-full p-6" 
                    value={email} 
-                   onChange={(e)=>setemail(e.target.value)} 
+                   onChange={(e)=>setEmail(e.target.value)} 
                   />
                   <Input 
                    placeholder="Password"
                    type="password" 
                    className="rounded-full p-6" 
                    value={password} 
-                   onChange={(e)=>setpassword(e.target.value)} 
+                   onChange={(e)=>setPassword(e.target.value)} 
                   /> 
                   <Input 
                    placeholder="Confirm Password"
                    type="password" 
                    className="rounded-full p-6" 
                    value={confirmPassword} 
-                   onChange={(e)=>setconfirmPassword(e.target.value)} 
+                   onChange={(e)=>setConfirmPassword(e.target.value)} 
                   />
                   <Button className="rounded-full p-6" onClick={handleSignup}>Signup       
                   </Button>
@@ -89,9 +147,7 @@ const Auth = () => {
               </Tabs> 
           </div>
         </div>
-        <div className="flex justify-center items-center">
-          
-          
+        <div className="hidden xl:flex justify-center items-center">
           <img src={Background} alt="background login" className="h-[700px]" />
         </div>       
       </div>
