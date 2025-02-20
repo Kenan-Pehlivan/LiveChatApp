@@ -30,7 +30,6 @@ export const searchContacts= async (request,response,next) => {
 
         return response.status(200).json({contacts});
 
-        return response.status(200).send("Logout successfully.");
         } catch (error) { 
         
         console.log({error});
@@ -94,8 +93,27 @@ export const getContactsforDMList= async (request,response,next) => {
         ]);
 
         return response.status(200).json({contacts});
+        } catch (error) { 
+        
+        console.log({error});
+        return response.status(500).send("Internal Server Error");
+    }
+};
 
-        return response.status(200).send("Logout successfully.");
+
+export const getAllContacts= async (request,response,next) => {
+    
+    try {
+        
+        const users = await User.find({_id:{$ne:request.userId}},"firstName lastName _id")
+
+        const contacts = users.map((user)=> ({
+            label: user.firstName ? `${user.firstName} ${user.lastName}`: user.email,
+        }))
+
+        return response.status(200).json({contacts});
+
+        
         } catch (error) { 
         
         console.log({error});
