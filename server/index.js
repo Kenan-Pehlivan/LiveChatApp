@@ -1,7 +1,13 @@
+<<<<<<< Updated upstream
 //test Kenan oasdsaodjasda
 
 //Ich bin ein Test Kenan
 
+=======
+
+//PArallel
+//Parallel2
+>>>>>>> Stashed changes
 import express from"express";
 import dotenv from "dotenv";
 import cors from "cors";
