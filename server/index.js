@@ -1,10 +1,3 @@
-//Wir sind immernoch dumm
-//Test laber
-//Der letzte Test
-//DER TEST 55555
-//TEST 2222
-//Test Kenan
-//TEST
 import express from"express";
 import dotenv from "dotenv";
 import cors from "cors";
