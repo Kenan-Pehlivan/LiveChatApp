@@ -40,7 +40,7 @@ const createChannel = async ()=> {
       if (channelName.length>0 && selectedContacts.length>0){
       const response = await apiClient.post(CREATE_CHANNEL_ROUTE, {
         name: channelName,
-        members: selectedContacts.map((contact)=> contact.value),
+        members: selectedContacts.map((contact)=> contact.value), /*`${contact.firstName} ${contact.lastName}`) */
       }, {withCredentials:true});
       if(response.status===201){
         setChannelName("");

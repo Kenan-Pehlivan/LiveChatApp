@@ -52,7 +52,7 @@ const MessageContainer = () => {
         console.log({ error });
       }
     }
-    if (selectedChatData._id /*&& selectedChatType*/ === "contact") {
+    if (selectedChatData._id && selectedChatType === "contact") {
       getMessages();
     }else if (selectedChatType ==="channel"){
        getChannelMessages();
