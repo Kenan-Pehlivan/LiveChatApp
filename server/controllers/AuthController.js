@@ -1,3 +1,7 @@
+/*  Veränderungsdatum: 08.03.2025 
+    Diese Datei enthält alle Funktionen und die Logik, die für die Überprüfung der Authentifizierung und Profil Setup notwendig sind.
+*/
+
 import { response } from "express";
 import User from "../models/UserModel.js";
 import jwt from "jsonwebtoken";
@@ -6,23 +10,23 @@ import { renameSync, unlinkSync } from "fs";
 
 const maxAge = 3 * 24 * 60 * 60 * 1000;
 
-//Der Token besteht aus email, userID mit verschlüsselung durch JWT_KEY und ist für 3 Tage valide
+//Der Token besteht aus email, userID mit verschlüsselung durch JWT_KEY und ist für 3 Tage gültig
 const createToken = (email, userId) => {
-    return jwt.sign({email,userId},process.env.JWT_KEY,{expiresIn: maxAge});
+    return jwt.sign({ email, userId }, process.env.JWT_KEY, { expiresIn: maxAge });
 };
 
-export const signup = async (request,response,next) => {
+export const signup = async (request, response, next) => {
     //Versuche den User zu registrieren
     try {
-        const {email, password} = request.body;
+        const { email, password } = request.body;
 
         //Wenn email oder passwort nicht eingegeben, dann gebe Fehler meldung aus
-        if(!email || !password){
+        if (!email || !password) {
             return response.status(400).send("Email and Password is Required")
         }
 
         //Lege den User an
-        const user = await User.create({email,password});
+        const user = await User.create({ email, password });
 
         //gebe den den Token als cookie zurück
         response.cookie("jwt", createToken(email, user.id), {
@@ -39,26 +43,26 @@ export const signup = async (request,response,next) => {
             },
         });
 
-    } catch (error) { 
+    } catch (error) {
         //Fange den Fehler und gebe es aus bzw. zurück
-        console.log({error});
+        console.log({ error });
         return response.status(500).send("Internal Server Error");
     }
 };
 
-export const login = async (request,response,next) => {
+export const login = async (request, response, next) => {
     //Versuche den User zu einzuloggen
     try {
-        const {email, password} = request.body;
+        const { email, password } = request.body;
 
         //Wenn email oder passwort nicht eingegeben, dann gebe Fehler meldung aus
-        if(!email || !password){
+        if (!email || !password) {
             return response.status(400).send("Email and Password is required.");
         }
 
         //Finde den User 
-        const user = await User.findOne({email});
-        if(!user) {
+        const user = await User.findOne({ email });
+        if (!user) {
             return response.status(404).send("User with the given email not found.");
         }
         //Vergleiche den Passwort
@@ -89,22 +93,22 @@ export const login = async (request,response,next) => {
             },
         });
 
-    } catch (error) { 
+    } catch (error) {
         //Fange den Fehler und gebe es aus bzw. zurück
-        console.log({error});
+        console.log({ error });
         return response.status(500).send("Internal Server Error");
     }
 };
 
-export const getUserInfo = async (request,response,next) => {
-    //Versuche den User zu einzuloggen
+export const getUserInfo = async (request, response, next) => {
+
     try {
         //Suche den User durch seine ID und gebe Fehlermeldung wen dieser dadurch nicht gefunden wird
         const userData = await User.findById(request.userId);
         if (!userData) {
             return response.status(404).send("User with the given id not found.");
         }
-       
+
 
         //Gebe die Userdaten zurück 
         return response.status(200).json({
@@ -116,30 +120,30 @@ export const getUserInfo = async (request,response,next) => {
             image: userData.image,
             color: userData.color,
         });
-        
 
-    } catch (error) { 
+
+    } catch (error) {
         //Fange den Fehler und gebe es aus bzw. zurück
-        console.log({error});
+        console.log({ error });
         return response.status(500).send("Internal Server Error");
     }
 };
 
-export const updateProfile = async (request,response,next) => {
-    //Versuche den User zu einzuloggen
+export const updateProfile = async (request, response, next) => {
+
     try {
-        const {userId} = request;
-        const {firstName, lastName, color} = request.body;
+        const { userId } = request;
+        const { firstName, lastName, color } = request.body;
         //Suche den User durch seine ID und gebe Fehlermeldung wen dieser dadurch nicht gefunden wird
-        
+
         if (!firstName || !lastName) {
             return response.status(400).send("Firstname, lastname and color is required.");
         }
-       
+
         //Speichere die bei dem Profil erstellten bzw. geänderten Daten in userData
         const userData = await User.findByIdAndUpdate(userId, {
-            firstName,lastName,color,profileSetup:true
-        }, {new:true, runValidators:true});
+            firstName, lastName, color, profileSetup: true
+        }, { new: true, runValidators: true });
 
         //Gebe die Userdaten zurück 
         return response.status(200).json({
@@ -151,90 +155,83 @@ export const updateProfile = async (request,response,next) => {
             image: userData.image,
             color: userData.color,
         });
-        
 
-    } catch (error) { 
+
+    } catch (error) {
         //Fange den Fehler und gebe es aus bzw. zurück
-        console.log({error});
+        console.log({ error });
         return response.status(500).send("Internal Server Error");
     }
 };
 
-//Add Profil Image not done !!!
-export const addProfileImage= async (request,response,next) => {
-    //Versuche den User zu einzuloggen
+export const addProfileImage = async (request, response, next) => {
+
     try {
-        if(!request.file) {
+        //Wenn keine Datei hochgeladen wird, gebe eine Fehlermeldung aus
+        if (!request.file) {
             return response.status(400).send("File is required.");
         }
-
+        //Ansonsten 
         const date = Date.now();
         let fileName = "uploads/profiles/" + date + request.file.originalname;
-        renameSync(request.file.path,fileName);
+        renameSync(request.file.path, fileName);
+        const updatedUser = await User.findByIdAndUpdate(request.userId, { image: fileName }, { new: true, runValidators: true });
 
-        const updateUser = await User.findByIdAndUpdate(request.userId,{image:fileName}, {new:true,runValidators:true});
-        
         //Gebe die Userdaten zurück 
         return response.status(200).json({
-               
-            image: updateUser.image,
-            
-        });
-        
 
-    } catch (error) { 
+            image: updatedUser.image
+        });
+
+
+    } catch (error) {
         //Fange den Fehler und gebe es aus bzw. zurück
-        console.log({error});
+        console.log({ error });
         return response.status(500).send("Internal Server Error");
     }
 };
 
+export const removeProfileImage = async (request, response, next) => {
 
-//Add Profil Image not done !!!
-export const removeProfileImage= async (request,response,next) => {
-    //Versuche den User zu einzuloggen
     try {
-        const {userId} = request;
+        const { userId } = request;
         const user = await User.findById(userId);
 
-        if (!user){
-              return response.status(404).send("User not found.");
+        //Wenn es den User nicht gibt, gebe eine Fehlermeldung aus
+        if (!user) {
+            return response.status(404).send("User not found.");
         }
 
-        if(user.image) {
+        //Wenn es ein Profilbild gibt, dann lösche diese
+        if (user.image) {
             unlinkSync(user.image);
         }
-        
-        user.image=null;
+
+        //Setze User Image als null
+        user.image = null;
         await user.save();
-       
-        //Speichere die bei dem Profil erstellten bzw. geänderten Daten in userData
-        
 
-        //Gebe die Userdaten zurück 
-        return response.status(200).send("Profile Image removed successfully.");
-        
+        //Gebe ein Erfolgsnachricht zurück
+        return response.status(200).send("Profile image removed successfully.");
 
-    } catch (error) { 
+    } catch (error) {
         //Fange den Fehler und gebe es aus bzw. zurück
-        console.log({error});
+        console.log({ error });
         return response.status(500).send("Internal Server Error");
     }
 };
 
 
-export const logout= async (request,response,next) => {
-    
+export const logout = async (request, response, next) => {
+
     try {
-        
-
-        response.cookie("jwt","",{maxAge:1, secure:true,sameSite:"None"});
+        //Die JWT-Cookie wird gelöscht, da der Wert auf leer gesetzt wird.
+        response.cookie("jwt", "", { maxAge: 1, secure: true, sameSite: "None" });
         return response.status(200).send("Logout successfully.");
-        
 
-    } catch (error) { 
-        
-        console.log({error});
+    } catch (error) {
+        //Fange den Fehler und gebe es aus bzw. zurück
+        console.log({ error });
         return response.status(500).send("Internal Server Error");
     }
 };

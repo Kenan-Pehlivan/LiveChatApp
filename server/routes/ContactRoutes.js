@@ -3,7 +3,7 @@ import { verifyToken } from "../middlewares/AuthMiddleware.js";
 import { getAllContacts, getContactsforDMList, searchContacts } from "../controllers/ContactsController.js";
 
 
-
+//Route für Kontakte 
 const contactsRoutes = Router();
 
 contactsRoutes.post("/search", verifyToken, searchContacts);

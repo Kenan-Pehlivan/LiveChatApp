@@ -1,4 +1,7 @@
-//hier werden alle const definiert die benutzt werden, also alle URLs für die Routen
+/*  Veränderungsdatum: 08.03.2025 
+    Diese Datei enthält alle Konstanten für die API-Routen die benutzt werden, also alle URLs für die Routen
+*/
+
 
 export const HOST = import.meta.env.VITE_SERVER_URL;
 
