@@ -62,7 +62,7 @@ const ProfileInfo = () => {
                     <Tooltip>
                         <TooltipTrigger>
                             {/* Beim klicken des Icon wird der User zur Profil Seite weitergeleitet*/}
-                            <FiEdit2 className="text-purple-500 text-xl font-medium"
+                            <FiEdit2 className="text-gray-400 text-xl font-medium"
                                 onClick={() => navigate('/profile')}
                             />
                         </TooltipTrigger>

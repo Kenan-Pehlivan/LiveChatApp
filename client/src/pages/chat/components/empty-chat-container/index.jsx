@@ -18,9 +18,9 @@ const EmptyChatContainer = () => {
       {/*Zeigt daneben auch Begrüßungstext anstelle des Chats, da nichts ausgewählt ist*/}
       <div className="text-opacity-80 text-white flex flex-col gap-5 item-center mt-10 lg:text-4xl text-3xl transition-all duration-300 text-center">
         <h3 className="poppins-medium">
-          Hi<span className="= text-purple-500">!</span> Welcome to
-          <span className="text-purple-500"> Our</span> LiveChatApp
-          <span className="text-purple-500">.</span>
+          Hi<span className="= text-red-500">!</span> Willkommen zu
+          <span className="text-red-500"> DH</span>BW-Chatty
+          <span className="text-red-500">.</span>
         </h3>
       </div>
     </div>

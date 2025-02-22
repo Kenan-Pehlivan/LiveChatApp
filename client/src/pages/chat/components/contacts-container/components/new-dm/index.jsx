@@ -80,7 +80,7 @@ const NewDM = () => {
             />
           </TooltipTrigger>
           <TooltipContent className="bg-[#1c1b1e] border-none mb-2 p-3 text-white" >
-            Select New Contact
+            Suche Neuen Kontakt
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
@@ -88,13 +88,13 @@ const NewDM = () => {
       <Dialog open={openNewContactModal} onOpenChange={setOpenNewContactModal}>
         <DialogContent className="bg-[#181920] border-none text-white w-[400px] h-[400px] flex flex-col">
           <DialogHeader>
-            <DialogTitle>Select a Contact</DialogTitle>
+            <DialogTitle>Wähle einen Kontakt</DialogTitle>
             <DialogDescription></DialogDescription>
           </DialogHeader>
           {/* In dem Popup gibt es einen Eingabenfeld der ständig nach kontakte sucht die mit den eingebenen Daten übereinstimmen 
           --> durch die Funktion searchContacts() */}
           <div>
-            <Input placeholder="Search Contacts" className="rounded-lg p-6 bg-[#2c2e3b] border-none"
+            <Input placeholder="Suche Kontakte" className="rounded-lg p-6 bg-[#2c2e3b] border-none"
               onChange={(e) => searchContacts(e.target.value)}
             />
           </div>
@@ -146,8 +146,8 @@ const NewDM = () => {
               />
               <div className="text-opacity-80 text-white flex flex-col gap-5 item-center mt-5 lg:text-2xl text-3xl transition-all duration-300 text-center">
                 <h3 className="poppins-medium">
-                  Search New
-                  <span className="text-purple-500"> Contacts</span>
+                  Suche Neue
+                  <span className="text-red-500"> Kontakte</span>
                 </h3>
               </div>
             </div>

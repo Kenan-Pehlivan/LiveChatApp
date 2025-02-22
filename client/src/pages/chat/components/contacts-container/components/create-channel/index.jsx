@@ -67,18 +67,20 @@ return (
           />
       </TooltipTrigger>
       <TooltipContent className="bg-[#1c1b1e] border-none mb-2 p-3 text-white" >
-          Create New Channel 
+          Erstelle Neuen Channel 
       </TooltipContent>
     </Tooltip>
   </TooltipProvider>
   <Dialog open={newChannelModal} onOpenChange={setNewChannelModal}>
 <DialogContent className="bg-[#181920] border-none text-white w-[400px] h-[400px] flex flex-col">
   <DialogHeader>
-    <DialogTitle>Details for Channel</DialogTitle>
-    <DialogDescription>Enter Channel Name and Members</DialogDescription>
+    <DialogTitle>Details für Channel</DialogTitle>
+    <DialogDescription>Channel Name und Mitglieder</DialogDescription>
   </DialogHeader>
   <div>
-      <Input placeholder="Channel Name" className="rounded-lg p-6 bg-[#2c2e3b] border-none"
+      <Input 
+          className="rounded-lg bg-[#2c2e3b] border-none"
+          placeholder="Channel Name" 
           onChange={(e)=>setChannelName(e.target.value)}
           value={channelName}
       />
@@ -87,18 +89,18 @@ return (
     <MultipleSelector 
     className="rounded-lg bg-[#2c2e3b] border-none py-2 text-white"
     defaultOptions={allContacts}
-    placeholder="Search Contacts"
+    placeholder="Suche Kontakte"
     value={selectedContacts}
     onChange={setSelectedContacts}
     emptyIndicator={
-      <p className="text-center text-lg leading-10 text-gray-600"> No results found</p>
+      <p className="text-center text-lg leading-10 text-gray-600">No Result</p>
     }
     />
   </div>
   <div>
-    <Button className="w-full bg-purple-700 hover:bg-purple-900 transition-all duration-300"
+    <Button className="w-full bg-red-600 hover:bg-red-800 transition-all duration-300"
     onClick={createChannel}
-    >Create Channel</Button>
+    >Erstelle Channel</Button>
     </div> 
 </DialogContent>
 </Dialog>

@@ -132,7 +132,7 @@ const MessageBar = () => {
                     onChange={(e) => setMessage(e.target.value)}
                 />
                 {/* Button um Anhänge hochzuladen, ruft handleAttachmentClick auf*/}
-                <button className="text-neutral-500 focus:border-none focus:outline-none focus:text-white duration-300 transition-all"
+                <button className="text-neutral-300 focus:border-none focus:outline-none focus:text-white duration-300 transition-all"
                     onClick={handleAttachmentClick}
                 >
                     <GrAttachment className="text-2xl" />
@@ -140,7 +140,7 @@ const MessageBar = () => {
                 <input type="file" className="hidden" ref={fileInputRef} onChange={handleAttachmentChange} />
                 <div className="relative">
                     {/* Button um Emoijis einzufügen*/}
-                    <button className="text-neutral-500 focus:border-none focus:outline-none focus:text-white duration-300 transition-all"
+                    <button className="text-neutral-300 focus:border-none focus:outline-none focus:text-white duration-300 transition-all"
                         onClick={() => setemojiPickerOpen(true)}
                     >
                         <RiEmojiStickerLine className="text-2xl" />
@@ -156,7 +156,7 @@ const MessageBar = () => {
                 </div>
             </div>
             {/* Button um die nachricht zu versenden, ruft handleSendMessage auf*/}
-            <button className="bg-[#8417ff] rounded-md flex item-center justify-center p-5 focus:border-none hover:bg-[#741bda] focus:bg-[#741bda] focus:outline-none focus:text-white duration-300 transition-all"
+            <button className="bg-[#ff1f1f] rounded-md flex item-center justify-center p-5 focus:border-none hover:bg-[#ce3333] focus:bg-[#ff1f1f] focus:outline-none focus:text-white duration-300 transition-all"
                 onClick={handleSendMessage}
             >
                 <IoSend className="text-2xl" />
