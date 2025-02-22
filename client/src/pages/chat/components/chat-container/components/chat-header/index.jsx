@@ -17,7 +17,7 @@ const ChatHeader = () => {
               selectedChatType === "contact" ? (<Avatar className="h-12 w-12 rounded-full overflow-hidden">
                 {
                   selectedChatData.image ? (
-                    <AvatarImage src={`${HOST}/${selectedChatData.image}`} alt="profile" className="object-cover w-full h-full bg-black" />) : (
+                    <AvatarImage src={`${HOST}/${selectedChatData.image}`} alt="profile" className="object-cover w-full h-full bg-slate-800" />) : (
                     <div className={`uppercase h-12 w-12 text-lg border-[1px] flex items-center justify-center rounded-full ${getColor(selectedChatData.color)}`}>
                       {selectedChatData.firstName ? selectedChatData.firstName.split("").shift() : selectedChatData.email.split("").shift()}
                     </div>

@@ -82,7 +82,9 @@ const Auth = () => {
 
 
   return (
-    <div className="h-[100vh] flex items-center justify-center">
+    <div className="bg-[#1c1d25]">
+    <div className="h-[100vh] flex items-center justify-center"> 
+     
     <div className="h-[80vh] bg-white border-2 border-white 
     text-opacity-90 shadow-2xl w-[80vw] md:w-[90vw] lg:w-[70vw] 
     xl:w-[60vw] rounded-3xl grid xl:grid-cols-2">
@@ -95,9 +97,8 @@ const Auth = () => {
           <p className="font-medium text-center"> Starte mit unserer Chatapp!</p>
         </div>
         <div className="hidden xl:flex justify-center items-center h-[50px]">
-          <img src={Background4} alt="background login" className="h-[80px] w-[80px] object contain" />
+          <img src={Background4} alt="background login" className="h-[80px] w-[80px] object contain" /> 
           </div>
-
         <div className="flex items-center justify-center w-full">
 
 
@@ -183,6 +184,8 @@ const Auth = () => {
           <img src={Background3} alt="background login" className="max-h-[80vh] max-w-[100%] object contain" />
         </div>       
       </div>
+    </div>
+
     </div>
   );
 };

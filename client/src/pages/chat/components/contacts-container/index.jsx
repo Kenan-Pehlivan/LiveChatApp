@@ -67,7 +67,7 @@ export default ContactsContainer;
 
 const Logo = () => {
     return (  
-          <div className="flex p-5 justify-start items-center gap-3">
+          <div className="flex p-5 justify-start items-center gap-3 border-b-2 border-[#2c343c] w-full mb-3">
             <img src={DHBWLogo} alt="DHBW Logo" className="h-12 w-auto" />
             <span className="text-3xl font-semibold">
               <span className="text-red-600">DH</span>BW-CHATTY</span>
