@@ -2,11 +2,12 @@ FROM node:23.8.0
 
 WORKDIR /app
 
-# Kopiere nur package.json und package-lock.json (falls vorhanden)
+# Kopiere nur package.json und package-lock.json
 COPY package.json package-lock.json* ./
 
 # Entferne node_modules und package-lock.json vor der Installation
-RUN rm -rf node_modules package-lock.json && npm install --force
+RUN rm -rf node_modules package-lock.json && \
+    npm install --force
 
 # Kopiere den restlichen Code ins Image
 COPY . .
