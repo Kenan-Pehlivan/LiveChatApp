@@ -65,6 +65,7 @@ const NewDM = () => {
     //Speichert die Informationen des ausgewählten Kontakts in setSelectedChatData.
     setSelectedChatData(contact);
     //Setzt die Suchergebnisse zurück
+    
     setSearchedContacts([]);
   };
 
