@@ -67,6 +67,7 @@ export const login = async (request, response, next) => {
         }
         //Vergleiche den Passwort
         const auth = await compare(password, user.password);
+        
 
         //Wenn der Passwort nicht übereinstimmt, gebe eine Fehlermeldung
         if (!auth) {
