@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY package.json package-lock.json* ./
 
-RUN npm install --force
+RUN rm -rf node_modules package-lock.json && npm install --force
 
 COPY . .
 
