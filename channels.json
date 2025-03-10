@@ -1,1 +1,0 @@
-[{"_id":{"$oid":"67c2050825e7897a7235d8d3"},"name":"Freunde","members":[{"$oid":"67c2047525e7897a7235d8ad"},{"$oid":"67c204b425e7897a7235d8b8"}],"admin":{"$oid":"67c204dd25e7897a7235d8c3"},"messages":[{"$oid":"67c2051225e7897a7235d8d6"}],"createdAt":{"$date":"2025-02-28T18:45:14.787Z"},"updatedAt":{"$date":"2025-02-28T18:48:50.121Z"},"__v":0}]

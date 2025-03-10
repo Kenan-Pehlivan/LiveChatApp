@@ -1,4 +1,6 @@
-db = connect("mongodb://localhost:27017/mydatabase");
+// Keine explizite Verbindung notwendig, MongoDB führt das Skript automatisch gegen die Standard-Datenbank aus
+
+db = db.getSiblingDB("chat-app"); // Stellt sicher, dass die richtige DB verwendet wird
 
 // Nutzer-Daten importieren
 db.users.insertMany([
