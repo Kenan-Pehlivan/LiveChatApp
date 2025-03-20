@@ -3,6 +3,7 @@ import { Avatar } from "./ui/avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
 import { HOST } from "@/utils/constants";
 import { getColor } from "@/lib/utils";
+import { useEffect } from "react";
 
 
 const ContactList = ({ contacts, isChannel = false }) => {
@@ -12,12 +13,15 @@ const ContactList = ({ contacts, isChannel = false }) => {
     const handleClick = (contact) => {
         if (isChannel) setSelectedChatType("channel");
         else setSelectedChatType("contact");
+    
         setSelectedChatData(contact);
-        if (selectedChatData && selectedChatData._id !== contact._id) {
+    };
+    
+    useEffect(() => {
+        if (selectedChatData) {
             setSelectedChatMessages([]);
-
         }
-    }
+    }, [selectedChatData]);
 
     return (
         <div className="mt-5">

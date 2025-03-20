@@ -12,6 +12,7 @@ import { GrAttachment } from 'react-icons/gr'
 import { IoSend } from "react-icons/io5";
 import { RiEmojiStickerLine } from "react-icons/ri";
 import { Socket } from "socket.io-client";
+import { toast } from "sonner";
 
 
 const MessageBar = () => {
@@ -42,6 +43,8 @@ const MessageBar = () => {
     }
 
     const handleSendMessage = async () => {
+        if (!message.trim()) return; // Leere Nachrichten verhindern
+
         //Wenn der Chat ein DM ist, dann sende eine Direkte Nachricht
         if (selectedChatType === "contact") {
             socket.emit("sendMessage", {
@@ -50,7 +53,9 @@ const MessageBar = () => {
                 recipient: selectedChatData._id,
                 messageType: "text",
                 fileUrl: undefined,
-            })
+            });
+            
+            
         } else if (selectedChatType === "channel") {
             //Ansonsten wenn es ein Gruppenchat ist, dann sende eine channel Nachricht
             socket.emit("send-channel-message", {
@@ -63,7 +68,7 @@ const MessageBar = () => {
         }
         //Setzte das Eingabefeld nach dem Senden zurück
         setMessage("");
-    }
+    };
 
     //Öffnet den Datei-Explorer, um eine Datei auszuwählen
     const handleAttachmentClick = () => {
@@ -78,6 +83,7 @@ const MessageBar = () => {
             const file = event.target.files[0];
             //Wenn Datei vorhanden ist, dann einen formData Objekt für den Upload erstellen.
             if (file) {
+                
                 const formData = new FormData();
                 formData.append("file", file);
                 setIsUploading(true);
@@ -91,6 +97,7 @@ const MessageBar = () => {
                 //Wenn der Upload erfolgreich war, dann..
                 if (response.status === 200 && response.data) {
                     //IS uploading status auf false setzen
+                    
                     setIsUploading(false)
                     //Wenn es sich um einen DM handelt, dann sende diese Datei als DM-Nachricht.
                     if (selectedChatType === "contact") {
@@ -101,6 +108,7 @@ const MessageBar = () => {
                             messageType: "file",
                             fileUrl: response.data.filePath,
                         })
+                        
                     } else if (selectedChatType === "channel") {
                         //Ansonsten Wenn es sich um einen Grupenchat handelt, dann sende diese Dateil als Channel-Nachricht.
                         socket.emit("send-channel-message", {
@@ -114,7 +122,7 @@ const MessageBar = () => {
                 }
             }
             //Hochgeladene Datei in der Console ausgeben
-            console.log({ file })
+            console.log({ file });
         } catch (error) {
             //Fange den Fehler und gebe diese aus. Setzte den is Uploading status auf false.
             setIsUploading(false)
@@ -130,6 +138,7 @@ const MessageBar = () => {
                     placeholder="Enter Message"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
                 />
                 {/* Button um Anhänge hochzuladen, ruft handleAttachmentClick auf*/}
                 <button className="text-neutral-300 focus:border-none focus:outline-none focus:text-white duration-300 transition-all"

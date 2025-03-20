@@ -31,7 +31,7 @@ const ContactsContainer = () => {
         getChannels();
 
   
-  },[setChannels, setDirectMessagesContacts]);
+  },[setChannels, setDirectMessagesContacts, directMessagesContacts]);
 
 
   return (

@@ -10,6 +10,7 @@ import { IoCloseSharp } from "react-icons/io5";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getColor } from "@/lib/utils";
 
+
 const MessageContainer = () => {
   const scrollRef = useRef();
   const {
@@ -58,6 +59,7 @@ const MessageContainer = () => {
       getChannelMessages();
     }
   }, [selectedChatData, selectedChatType, setSelectedChatMessages]);
+
 
 
 
@@ -110,6 +112,8 @@ const MessageContainer = () => {
           >
             {message.content}
           </div>
+
+
         )}
 
         {message.messageType === "file" && (
@@ -149,6 +153,9 @@ const MessageContainer = () => {
             </div>
           </div>
         )}
+        <div className="text-xs text-gray-600 mt-1">
+          {moment(message.timestamp).format("LT")}
+        </div>
       </div>
     );
   };

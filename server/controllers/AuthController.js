@@ -7,8 +7,12 @@ import User from "../models/UserModel.js";
 import jwt from "jsonwebtoken";
 import { compare } from "bcrypt";
 import { renameSync, unlinkSync } from "fs";
+import ExpressMongoSanitize from "express-mongo-sanitize";
+
 
 const maxAge = 3 * 24 * 60 * 60 * 1000;
+
+
 
 //Der Token besteht aus email, userID mit verschlüsselung durch JWT_KEY und ist für 3 Tage gültig
 const createToken = (email, userId) => {
@@ -18,12 +22,15 @@ const createToken = (email, userId) => {
 export const signup = async (request, response, next) => {
     //Versuche den User zu registrieren
     try {
+        
         const { email, password } = request.body;
 
         //Wenn email oder passwort nicht eingegeben, dann gebe Fehler meldung aus
         if (!email || !password) {
             return response.status(400).send("Email and Password is Required")
         }
+        
+        
 
         //Lege den User an
         const user = await User.create({ email, password });
@@ -53,6 +60,9 @@ export const signup = async (request, response, next) => {
 export const login = async (request, response, next) => {
     //Versuche den User zu einzuloggen
     try {
+        
+        ExpressMongoSanitize.sanitize(request.body);
+
         const { email, password } = request.body;
 
         //Wenn email oder passwort nicht eingegeben, dann gebe Fehler meldung aus
@@ -60,6 +70,7 @@ export const login = async (request, response, next) => {
             return response.status(400).send("Email and Password is required.");
         }
 
+        
         //Finde den User 
         const user = await User.findOne({ email });
         if (!user) {

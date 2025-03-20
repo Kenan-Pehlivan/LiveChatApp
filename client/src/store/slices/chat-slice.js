@@ -17,18 +17,32 @@ export const createChatSlice = (set, get) => ({
     setChannels: (channels) => set({ channels }),
     setIsUploading: (isUploading) => set({ isUploading }),
     setIsDownloading: (isDownloading) => set({ isDownloading }),
-    setFileUploadProgress: (fileUploadloadProgress) => set({ fileUploadProgress }),
+    setFileUploadProgress: (fileUploadProgress) => set({ fileUploadProgress }),
     setFileDownloadProgress: (fileDownloadProgress) => set({ fileDownloadProgress }),
     setSelectedChatType: (selectedChatType) => set({ selectedChatType }),
     setSelectedChatData: (selectedChatData) => set({ selectedChatData }),
     setSelectedChatMessages: (selectedChatMessages) => set({ selectedChatMessages }),
     setDirectMessagesContacts: (directMessagesContacts) => set({ directMessagesContacts }),
 
-    //Fügt einen neuen Channel an den Anfang der Channel-Liste hinzu.
     addChannel: (channel) => {
-        const channels = get().channels;
-        set({ channels: [channel, ...channels] })
-    },
+        // Validate the input
+        if (!channel || !channel._id) {
+          console.error("Invalid channel object");
+          return;
+        }
+      
+        // Check for duplicates
+        set((state) => {
+          const channelExists = state.channels.some((c) => c._id === channel._id);
+          if (channelExists) {
+            console.warn("Channel already exists in the list");
+            return state; // Return the current state without changes
+          }
+      
+          // Add the channel to the beginning of the array
+          return { channels: [channel, ...state.channels] };
+        });
+      },
 
     //Setzt den aktuellen Chat auf “leer”, sodass kein Chat aktiv ist.
     closeChat: () => set({ selectedChatData: undefined, selectedChatType: undefined, selectedChatMessages: [], }),
@@ -40,26 +54,37 @@ export const createChatSlice = (set, get) => ({
 
         set({
             selectedChatMessages: [
-                ...selectedChatMessages, {
+                ...selectedChatMessages,
+                {
                     ...message,
-                    recipient: selectedChatType === "channel" ? message.recipient : message.recipient._id,
-                    sender: selectedChatType === "channel" ? message.sender : message.sender._id,
+                    timestamp: message.timestamp || new Date(), // Falls nicht vorhanden, Zeit setzen
+                    recipient: selectedChatType === "channel"
+                        ? message.recipient
+                        : message.recipient?._id || message.recipient,
+                    sender: selectedChatType === "channel"
+                        ? message.sender
+                        : message.sender?._id || message.sender,
                 }
             ]
-        })
+        });
     },
     //Sorgt dafür, dass der Channel, in dem gerade eine Nachricht geschrieben wurde, an den Anfang der Channel-Liste rückt.
     addChannelInChannelList: (message) => {
-
         const channels = get().channels;
         const data = channels.find((channel) => channel._id === message.channelId);
-        const index = channels.findIndex(
-            (channel) => channel._id === message.channelId
-        );
-        console.log(channels, data, index);
-        if (index !== -1 && index !== undefined) {
-            channels.splice(index, 1);
-            channels.unshift(data);
+        const index = channels.findIndex((channel) => channel._id === message.channelId);
+
+        console.log(channels, data, index);            
+        if (index !== -1 && data) {
+            // Create a new array without mutating the original state
+            const updatedChannels = [
+                data, // Move the found channel to the beginning
+                ...channels.slice(0, index), // Include channels before the found channel
+                ...channels.slice(index + 1), // Include channels after the found channel
+            ];
+
+            // Update the state with the new array
+            set({ channels: updatedChannels });
         }
     }
 });

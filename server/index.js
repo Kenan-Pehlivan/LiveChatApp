@@ -1,6 +1,6 @@
 /*  Veränderungsdatum: 08.03.2025 
     Diese Datei ist der Hauptserver für eine Node.js/Express-Anwendung.
-    Sie konfiguriert, startet und verbindet den Server mit MongoDB.   
+    Sie konfiguriert, startet und verbindet den Server mit MongoDB.
 */
 
 import express from "express";
@@ -21,6 +21,8 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3001;
 const databaseURL = process.env.DATABASE_URL;
+
+app.set('trust proxy', 1); // Vertraut nur dem ersten Proxy
 
 // Um die Kommunikation zwischen mehrere Servern zu erlauben, durch RestAPI methoden
 app.use(
@@ -50,7 +52,10 @@ const server = app.listen(port, () => {
 });
 
 //initialisiert Websockets um die Kommunikation zu ermöglichen
-setupSocket(server)
+setupSocket(server);
+
+
+
 
 //Um mit den Datenbank zu verbinden, inkl. einer Fehlermeldung bei falsch eingaben
 mongoose.connect(databaseURL).then(() => console.log("DB Connection erfolgreich.")).catch(err => console.log(err.message));
