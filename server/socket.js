@@ -18,7 +18,6 @@ export const redisSubClient = new Redis({
 // Benutzer-Sockets in Redis speichern
 const userSocketMapKey = "userSocketMap";
 
-let io;
 
 const setupSocket = (server) => {
   const io = new SocketIOServer(server, {
@@ -31,17 +30,6 @@ const setupSocket = (server) => {
     adapter: createShardedAdapter(redisPubClient, redisSubClient.duplicate())
 
   });
-
-  /*
-  // Redis Adapter für Socket.IO
-  io.adapter(createShardedAdapter({
-    pubClient: redisPubClient, // Verwende die gemeinsame Verbindung
-    subClient: redisSubClient.duplicate() // Erstellt eine zweite Verbindung für Abonnements
-  }));
-
-*/
-
-
 
   const disconnect = async (socket) => {
     console.log(`Client Disconnected: ${socket.id}`);
@@ -134,7 +122,6 @@ const setupSocket = (server) => {
     socket.on("sendMessage", sendMessage);
     socket.on("send-channel-message", sendChannelMessage);
     socket.on("addChannel", async (channel) => {
-      console.log("tset........");
       for (const member of channel.members) {
         if (!member || !member._id) {
           console.warn("Fehlendes Mitglied oder _id:", member);
@@ -151,10 +138,9 @@ const setupSocket = (server) => {
     socket.on("disconnect", () => disconnect(socket));
   });
 
-  return io;
+
 };
 
-// Export the io instance
-export { io };
+
 
 export default setupSocket;
