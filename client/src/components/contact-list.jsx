@@ -15,13 +15,14 @@ const ContactList = ({ contacts, isChannel = false }) => {
         else setSelectedChatType("contact");
     
         setSelectedChatData(contact);
-    };
-    
-    useEffect(() => {
-        if (selectedChatData) {
+
+        if (selectedChatData && selectedChatData._id && selectedChatData._id !== contact._id) {
             setSelectedChatMessages([]);
         }
-    }, [selectedChatData]);
+
+
+    };
+    
 
     return (
         <div className="mt-5">
