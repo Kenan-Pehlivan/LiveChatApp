@@ -186,4 +186,4 @@ build
 
 #wraper
 !maven-wrapper.jar
-!gradle-wrapper.jar
+!gradle-wrapper.jarnode_modules/
