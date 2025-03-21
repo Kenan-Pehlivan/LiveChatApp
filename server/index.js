@@ -1,4 +1,4 @@
-/*  Veränderungsdatum: 08.03.2025 
+/*  Veränderungsdatum: 21.03.2025 
     Diese Datei ist der Hauptserver für eine Node.js/Express-Anwendung.
     Sie konfiguriert, startet und verbindet den Server mit MongoDB.
 */
@@ -17,7 +17,7 @@ import channelRoutes from "./routes/ChannelRoutes.js";
 //Alle Enviroment Variablen sind somit in Prosses.env (.env)
 dotenv.config();
 
-//Alle variblen holen
+// Initialisiert die Express-Anwendung und lädt die Umgebungsvariablen
 const app = express();
 const port = process.env.PORT || 3001;
 const databaseURL = process.env.DATABASE_URL;
@@ -54,8 +54,5 @@ const server = app.listen(port, () => {
 //initialisiert Websockets um die Kommunikation zu ermöglichen
 setupSocket(server);
 
-
-
-
-//Um mit den Datenbank zu verbinden, inkl. einer Fehlermeldung bei falsch eingaben
+// Stellt die Verbindung zur MongoDB-Datenbank her und gibt eine Fehlermeldung aus, falls die Verbindung fehlschlägt
 mongoose.connect(databaseURL).then(() => console.log("DB Connection erfolgreich.")).catch(err => console.log(err.message));

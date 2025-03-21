@@ -1,4 +1,4 @@
-/*  Veränderungsdatum: 08.03.2025 
+/*  Veränderungsdatum: 21.03.2025 
     Diese Datei enthält alle Funktionen und die Logik, die für die Überprüfung der Authentifizierung und Profil Setup notwendig sind.
 */
 
@@ -10,7 +10,7 @@ import { renameSync, unlinkSync } from "fs";
 import ExpressMongoSanitize from "express-mongo-sanitize";
 
 
-const maxAge = 3 * 24 * 60 * 60 * 1000;
+const maxAge = 1 * 24 * 60 * 60 * 1000;
 
 
 

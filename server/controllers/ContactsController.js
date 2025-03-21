@@ -1,4 +1,4 @@
-/*  Veränderungsdatum: 08.03.2025 
+/*  Veränderungsdatum: 21.03.2025 
     Diese Datei enthält alle Funktionen und die Logik, die für die Verwaltunf und Suche von Kontakte notwendig sind.
 */
 
