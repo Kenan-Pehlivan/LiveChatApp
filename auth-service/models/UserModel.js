@@ -1,8 +1,6 @@
 /*  Veränderungsdatum: 08.03.2025 
     Diese Datei enthält das Mongoose-Datenmodell für Benutzer, einschließlich E-Mail, Passwort, Name und Profilinformationen.
 */
-
-
 import mongoose from "mongoose";
 import { genSalt, hash } from "bcrypt";
 

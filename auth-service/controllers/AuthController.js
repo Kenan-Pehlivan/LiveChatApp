@@ -2,7 +2,6 @@
     Diese Datei enthält alle Funktionen und die Logik, die für die Überprüfung der Authentifizierung und Profil Setup notwendig sind.
 */
 
-/*
 import { response } from "express";
 import User from "../models/UserModel.js";
 import jwt from "jsonwebtoken";
@@ -71,7 +70,7 @@ export const login = async (request, response, next) => {
             return response.status(400).send("Email and Password is required.");
         }
 
-        
+        console.log("ER KOMMT REIN");
         //Finde den User 
         const user = await User.findOne({ email });
         if (!user) {
@@ -248,4 +247,3 @@ export const logout = async (request, response, next) => {
         return response.status(500).send("Internal Server Error");
     }
 };
-*/

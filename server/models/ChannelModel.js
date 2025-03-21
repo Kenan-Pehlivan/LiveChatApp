@@ -2,6 +2,7 @@
     Diese Datei enthält das Mongoose-Datenmodell für Kanäle, einschließlich deren Mitglieder, Nachrichten und Administratoren.
 */
 
+
 import mongoose from "mongoose";
 
 // Definiert das Schema für Kanäle in der Datenbank

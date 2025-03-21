@@ -2,7 +2,6 @@
     Diese Datei enthält Middleware-Funktionen zur Überprüfung der Authentifizierung durch JWT-Token.
 */
 
-
 import { request, response } from "express";
 import jwt from "jsonwebtoken";
 

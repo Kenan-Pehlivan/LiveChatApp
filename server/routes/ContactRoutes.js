@@ -5,6 +5,24 @@
 import { Router } from "express";
 import { verifyToken } from "../middlewares/AuthMiddleware.js";
 import { getAllContacts, getContactsforDMList, searchContacts } from "../controllers/ContactsController.js";
+import axios from "axios";
+
+/*
+export const verifyToken = async (userId, token) => {
+    try {
+        console.log("Verifying token:", token); // Debugging: Überprüfen, ob das Token korrekt ist
+        const response = await axios.get("http://auth-service:8750/api/auth/verfiy-token", {
+            headers: {
+              Authorization: `Bearer ${token}`, // Token mitgeben
+            },
+            withCredentials: true,
+          });
+      return response.data; // Rückgabe der Benutzerdaten
+    } catch (error) {
+      console.error("Error fetching user from auth-service:", error);
+      throw new Error("Could not fetch user data");
+    }
+  };*/
 
 // Initialisiert die Routen für die Kontaktverwaltung und die Authentifizierungsmiddleware
 const contactsRoutes = Router();
@@ -19,3 +37,4 @@ contactsRoutes.get("/get-contacts-for-dm", verifyToken, getContactsforDMList);
 contactsRoutes.get("/get-all-contacts", verifyToken, getAllContacts)
 
 export default contactsRoutes;
+

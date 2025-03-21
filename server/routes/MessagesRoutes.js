@@ -6,6 +6,23 @@ import { Router } from "express";
 import { verifyToken } from "../middlewares/AuthMiddleware.js"
 import { getMessages, uploadFile } from "../controllers/MessagesController.js"
 import multer from "multer";
+import axios from "axios";
+
+/*
+export const verifyToken = async (userId, token) => {
+    try {
+        const response = await axios.get("http://auth-service:8750/api/auth/verfiy-token", {
+            headers: {
+              Authorization: `Bearer ${token}`, // Token mitgeben
+            },
+            withCredentials: true,
+          });
+      return response.data; // Rückgabe der Benutzerdaten
+    } catch (error) {
+      console.error("Error fetching user from auth-service:", error);
+      throw new Error("Could not fetch user data");
+    }
+  };*/
 
 // Initialisiert die Routen für Nachrichten und Datei-Uploads und bindet die Authentifizierungsmiddleware ein
 const messagesRoutes =  Router();

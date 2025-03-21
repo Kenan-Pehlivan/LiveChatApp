@@ -27,6 +27,14 @@ services:
       - ./server:/app
       - /app/node_modules
     scale: 3  # Skaliere den Service auf 3 Instanzen (du kannst die Zahl nach Bedarf anpassen)
+  
+  auth-service:
+    build: auth-service
+    networks:
+      - mern
+    depends_on:
+      - mongodb
+    scale: 3  # Skaliere den Service auf 3 Instanzen (du kannst die Zahl nach Bedarf anpassen)
 
   # MongoDB (Datenbank)
   mongodb:

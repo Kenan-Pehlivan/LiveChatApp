@@ -5,7 +5,25 @@
 import { Router } from "express";
 import { createChannel, getChannelMessages, getUserChannels } from "../controllers/ChannelController.js";
 import { verifyToken } from "../middlewares/AuthMiddleware.js"
+import axios from "axios";
 
+
+/*
+export const verifyToken = async (userId, token) => {
+    try {
+        console.log("Verifying token:", token); // Debugging: Überprüfen, ob das Token korrekt ist
+        const response = await axios.get("http://auth-service:8750/api/auth/verfiy-token", {
+            headers: {
+              Authorization: `Bearer ${token}`, // Token mitgeben
+            },
+            withCredentials: true,
+          });
+      return response.data; // Rückgabe der Benutzerdaten
+    } catch (error) {
+      console.error("Error fetching user from auth-service:", error);
+      throw new Error("Could not fetch user data");
+    }
+  };*/
 
 const channelRoutes = Router();
 
