@@ -30,6 +30,7 @@ app.use(
     origin: [process.env.ORIGIN],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     credentials: true,
+    
   })
 );
 
