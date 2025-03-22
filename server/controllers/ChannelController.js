@@ -1,7 +1,7 @@
 /*  Veränderungsdatum: 21.03.2025 
     Diese Datei enthält alle Funktionen und die Logik, die für die Verwaltung von Kanälen und deren Nachrichten notwendig sind.
 */
-
+/*
 import mongoose from "mongoose";
 import Channel from "../models/ChannelModel.js";
 import User from "../models/UserModel.js";
@@ -88,3 +88,4 @@ export const getChannelMessages = async (request, response, next) => {
         return response.status(500).send("Internal Server Error");
     }
 };
+*/

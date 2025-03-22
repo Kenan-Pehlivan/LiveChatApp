@@ -4,8 +4,10 @@
 */
 
 import { Server as SocketIOServer } from "socket.io";
-import Message from "./models/MessagesModel.js";
-import Channel from "./models/ChannelModel.js";
+
+import Message from "my-mongoose-models-for-chatapp/models/MessagesModel.js";
+import Channel from "my-mongoose-models-for-chatapp/models/ChannelModel.js";
+import User from "my-mongoose-models-for-chatapp/models/UserModel.js";
 import { Redis } from "ioredis";
 import { createShardedAdapter } from "@socket.io/redis-adapter";
 

@@ -26,7 +26,9 @@ services:
     volumes:
       - ./server:/app
       - /app/node_modules
-    scale: 3  # Skaliere den Service auf 3 Instanzen (du kannst die Zahl nach Bedarf anpassen)
+      - shared-upload-profile:/upload/profiles  # Gemeinsames Volume für Profilbilder
+      - shared-upload-file:/upload/files
+    scale: 2  # Skaliere den Service auf 3 Instanzen (du kannst die Zahl nach Bedarf anpassen)
   
   auth-service:
     build: auth-service
@@ -34,7 +36,36 @@ services:
       - mern
     depends_on:
       - mongodb
-    scale: 3  # Skaliere den Service auf 3 Instanzen (du kannst die Zahl nach Bedarf anpassen)
+    volumes:
+      - shared-upload-profile:/upload/profiles  # Gemeinsames Volume für Profilbilder
+    scale: 1  # Skaliere den Service auf 3 Instanzen (du kannst die Zahl nach Bedarf anpassen)
+
+
+  channel-service:
+    build: channel-service
+    networks:
+      - mern
+    depends_on:
+      - mongodb
+    scale: 1  
+
+  contact-service:
+    build: contact-service
+    networks:
+      - mern
+    depends_on:
+      - mongodb
+    scale: 1  
+
+  message-service:
+    build: message-service
+    networks:
+      - mern
+    depends_on:
+      - mongodb
+    volumes:
+      - shared-upload-file:/upload/files
+    scale: 2  
 
   # MongoDB (Datenbank)
   mongodb:
@@ -77,4 +108,8 @@ networks:
 
 volumes:
   mongo-data:
+    driver: local
+  shared-upload-profile:  # Gemeinsames Volume für Profilbilder
+    driver: local
+  shared-upload-file:  # Gemeinsames Volume für Profilbilder
     driver: local

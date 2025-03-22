@@ -3,11 +3,12 @@
 */
 
 import { response } from "express";
-import User from "../models/UserModel.js";
+//import User from "../models/UserModel.js";
 import jwt from "jsonwebtoken";
 import { compare } from "bcrypt";
 import { renameSync, unlinkSync } from "fs";
 import ExpressMongoSanitize from "express-mongo-sanitize";
+import User from "my-mongoose-models-for-chatapp/models/UserModel.js";
 
 
 const maxAge = 1 * 24 * 60 * 60 * 1000;
@@ -185,8 +186,9 @@ export const addProfileImage = async (request, response, next) => {
         }
         //Ansonsten 
         const date = Date.now();
-        let fileName = "uploads/profiles/" + date + request.file.originalname;
+        let fileName = "/upload/profiles/" + date + request.file.originalname;
         renameSync(request.file.path, fileName);
+        console.log(fileName);
         const updatedUser = await User.findByIdAndUpdate(request.userId, { image: fileName }, { new: true, runValidators: true });
 
         //Gebe die Userdaten zurück 

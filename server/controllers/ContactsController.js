@@ -1,7 +1,7 @@
 /*  Veränderungsdatum: 21.03.2025 
     Diese Datei enthält alle Funktionen und die Logik, die für die Verwaltunf und Suche von Kontakte notwendig sind.
 */
-
+/*
 import mongoose from "mongoose";
 import User from "../models/UserModel.js";
 import Message from "../models/MessagesModel.js"
@@ -141,3 +141,4 @@ export const getAllContacts = async (request, response, next) => {
         return response.status(500).send("Internal Server Error");
     }
 };
+*/

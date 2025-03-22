@@ -1,7 +1,7 @@
 /*  Veränderungsdatum: 21.03.2025 
     Diese Datei enthält alle Funktionen und die Logik für das Abrufen von Nachrichten und das Hochladen von Dateien.
 */
-
+/*
 
 
 import User from "../models/UserModel.js";
@@ -67,3 +67,4 @@ export const uploadFile = async (request, response, next) => {
         return response.status(500).send("Internal Server Error");
     }
 };
+*/

@@ -13,6 +13,7 @@ app.use(cors({ origin: process.env.ORIGIN, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 
+
 app.use("/api/auth", authRoutes);
 
 mongoose.connect(process.env.DATABASE_URL)

@@ -2,6 +2,7 @@
     Diese Datei enthält die Routen für das Abrufen von Nachrichten und das Hochladen von Dateien.
 */
 
+/*
 import { Router } from "express";
 import { verifyToken } from "../middlewares/AuthMiddleware.js"
 import { getMessages, uploadFile } from "../controllers/MessagesController.js"
@@ -23,7 +24,7 @@ export const verifyToken = async (userId, token) => {
       throw new Error("Could not fetch user data");
     }
   };*/
-
+/*
 // Initialisiert die Routen für Nachrichten und Datei-Uploads und bindet die Authentifizierungsmiddleware ein
 const messagesRoutes =  Router();
 
@@ -38,3 +39,4 @@ messagesRoutes.post("/get-messages", verifyToken, getMessages);
 messagesRoutes.post("/upload-file", verifyToken, upload.single("file"), uploadFile);
 
 export default messagesRoutes
+*/

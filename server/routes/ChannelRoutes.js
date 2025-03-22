@@ -2,6 +2,7 @@
     Diese Datei enthält die Routen für die Verwaltung von Kanälen, einschließlich der Erstellung von Kanälen, des Abrufens von Kanälen und Nachrichten.
 */
 
+/*
 import { Router } from "express";
 import { createChannel, getChannelMessages, getUserChannels } from "../controllers/ChannelController.js";
 import { verifyToken } from "../middlewares/AuthMiddleware.js"
@@ -25,6 +26,8 @@ export const verifyToken = async (userId, token) => {
     }
   };*/
 
+  /*
+
 const channelRoutes = Router();
 
 // Initialisiert die Kanäle-Routen und die Authentifizierungsmiddleware
@@ -39,3 +42,4 @@ channelRoutes.get("/get-user-channels", verifyToken, getUserChannels);
 channelRoutes.get("/get-channel-messages/:channelId", verifyToken, getChannelMessages);
 
 export default channelRoutes;
+*/

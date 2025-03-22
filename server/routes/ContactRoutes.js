@@ -2,6 +2,7 @@
     Diese Datei enthält die Routen für die Verwaltung von Kontakten, einschließlich der Suche nach Kontakten und Abruf von Kontakten für Direktnachrichten.
 */
 
+/*
 import { Router } from "express";
 import { verifyToken } from "../middlewares/AuthMiddleware.js";
 import { getAllContacts, getContactsforDMList, searchContacts } from "../controllers/ContactsController.js";
@@ -23,7 +24,7 @@ export const verifyToken = async (userId, token) => {
       throw new Error("Could not fetch user data");
     }
   };*/
-
+/*
 // Initialisiert die Routen für die Kontaktverwaltung und die Authentifizierungsmiddleware
 const contactsRoutes = Router();
 
@@ -38,3 +39,4 @@ contactsRoutes.get("/get-all-contacts", verifyToken, getAllContacts)
 
 export default contactsRoutes;
 
+*/

@@ -4,18 +4,18 @@
 
 import { Router } from "express";
 import { getUserInfo, login, signup, updateProfile, addProfileImage, removeProfileImage, logout } from "../controllers/AuthController.js";
-import verifyToken from "../middlewares/AuthMiddleware.js";
+import { verifyToken } from "../middlewares/AuthMiddleware.js";
 import multer from "multer";
 import rateLimit from "express-rate-limit";
 import RateLimitRedisStore from "rate-limit-redis";
-import User from "../models/UserModel.js";
+//import User from "../models/UserModel.js";
 //import { redisPubClient } from "../../server/socket.js"; // Falls nur das Senden von Nachrichten benötigt wird
 
 // Initialisiert die Authentifizierungsrouten und Middleware
 const authRoutes = Router();
 
 // Definiert die Konfiguration für das Hochladen von Profilbildern mit Multer
-const upload = multer({dest:"uploads/profiles/"});
+const upload = multer({ dest: "/upload/profiles/" });  // Pfad anpassen
 /*
 // Definiert die Rate-Limitierung für den Login-Versuch (maximal 3 Versuche alle 15 Minuten)
 const loginLimiter = rateLimit({

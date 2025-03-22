@@ -9,10 +9,10 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 //import authRoutes from "./routes/AuthRoutes.js";
-import contactsRoutes from "./routes/ContactRoutes.js";
+//import contactsRoutes from "./routes/ContactRoutes.js";
 import setupSocket from "./socket.js";
-import messagesRoutes from "./routes/MessagesRoutes.js";
-import channelRoutes from "./routes/ChannelRoutes.js";
+//import messagesRoutes from "./routes/MessagesRoutes.js";
+//import channelRoutes from "./routes/ChannelRoutes.js";
 
 //Alle Enviroment Variablen sind somit in Prosses.env (.env)
 dotenv.config();
@@ -35,17 +35,17 @@ app.use(
 );
 
 //Ermöglicht den zugriff auf hochgeladene profilbilder und dateien
-app.use("/uploads/profiles", express.static("uploads/profiles"));
-app.use("/uploads/files", express.static("uploads/files"));
+app.use("//upload/profiles", express.static("/upload/profiles"));
+app.use("//upload/files", express.static("/upload/files"));
 
 app.use(cookieParser());
 app.use(express.json());
 
 //API-Endpoints werden hier definiert
 //app.use("/api/auth", authRoutes);
-app.use("/api/contacts", contactsRoutes);
-app.use('/api/messages', messagesRoutes);
-app.use("/api/channel", channelRoutes);
+//app.use("/api/contacts", contactsRoutes);
+//app.use('/api/messages', messagesRoutes);
+//app.use("/api/channel", channelRoutes);
 
 //Jedes mal das der Server gestartet wird, gebe diese Meldung
 const server = app.listen(port, () => {
