@@ -1,6 +1,16 @@
-/*  Veränderungsdatum: 08.03.2025 
-    Diese Datei enthält die Profil Information ganz unter auf Sidebar.
-    Neben der Profil Information gibt es Knöpfe um das Profil zu ändern oder sich abzumelden.
+/* 
+    Veränderungsdatum: 22.03.2025
+    Diese Datei enthält die ContactsContainer-Komponente, 
+    die die Benutzeroberfläche für die Verwaltung von Direktnachrichten 
+    und Channels in einer Chat-App darstellt.
+    
+    Sie ruft beim Laden die Daten von den API-Endpunkten ab (Kontakte und Channels) 
+    und zeigt sie in zwei Abschnitten an: "Direct Messages" und "Channels".
+    
+    Zusätzlich gibt es Schaltflächen, um neue Direktnachrichten oder Channels zu erstellen. 
+    Die `useEffect` Hook wird verwendet, um diese Daten beim Laden der Komponente zu laden.
+    Der Zustand der Anwendung wird über useAppStore verwaltet, um die Kontakte und Channels 
+    zu speichern und in der Benutzeroberfläche anzuzeigen.
 */
 
 import { Avatar, AvatarImage } from "@/components/ui/avatar";

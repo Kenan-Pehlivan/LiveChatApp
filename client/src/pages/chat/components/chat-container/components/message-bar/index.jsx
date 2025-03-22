@@ -54,8 +54,8 @@ const MessageBar = () => {
                 messageType: "text",
                 fileUrl: undefined,
             });
-            
-            
+
+
         } else if (selectedChatType === "channel") {
             //Ansonsten wenn es ein Gruppenchat ist, dann sende eine channel Nachricht
             socket.emit("send-channel-message", {
@@ -83,7 +83,7 @@ const MessageBar = () => {
             const file = event.target.files[0];
             //Wenn Datei vorhanden ist, dann einen formData Objekt für den Upload erstellen.
             if (file) {
-                
+
                 const formData = new FormData();
                 formData.append("file", file);
                 setIsUploading(true);
@@ -97,7 +97,7 @@ const MessageBar = () => {
                 //Wenn der Upload erfolgreich war, dann..
                 if (response.status === 200 && response.data) {
                     //IS uploading status auf false setzen
-                    
+
                     setIsUploading(false)
                     //Wenn es sich um einen DM handelt, dann sende diese Datei als DM-Nachricht.
                     if (selectedChatType === "contact") {
@@ -108,7 +108,7 @@ const MessageBar = () => {
                             messageType: "file",
                             fileUrl: response.data.filePath,
                         })
-                        
+
                     } else if (selectedChatType === "channel") {
                         //Ansonsten Wenn es sich um einen Grupenchat handelt, dann sende diese Dateil als Channel-Nachricht.
                         socket.emit("send-channel-message", {

@@ -1,3 +1,10 @@
+/*  Veränderungsdatum: 23.03.2025 
+    Diese Komponente zeigt das Benutzerprofil an und ermöglicht es dem Benutzer, 
+    seinen Namen, das Profilbild und die bevorzugte Farbe zu ändern. 
+    Der Benutzer kann auch ein neues Profilbild hochladen oder das bestehende löschen.
+    Änderungen werden auf dem Server gespeichert und das Benutzerprofil aktualisiert.
+*/
+
 import { useAppStore } from "@/store"
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +19,7 @@ import { apiClient } from "@/lib/api-client";
 import { ADD_PROFILE_IMAGE_ROUTE, HOST, REMOVE_PROFILE_IMAGE_ROUTE, UPDATE_PROFILE_ROUTE } from "@/utils/constants";
 
 
-
+// Const für die Anzeige und Bearbeitung des Benutzerprofils
 const Profile = () => {
   const navigate = useNavigate();
   const { userInfo, setUserInfo } = useAppStore();
@@ -30,11 +37,12 @@ const Profile = () => {
       setLastName(userInfo.lastName);
       setSelectedColor(userInfo.color);
     }
-    if(userInfo.image) {
-      setImage(`${HOST}/${userInfo.image}`);
+    if (userInfo.image) {
+      setImage(`${HOST}/${userInfo.image}`);      // Setzt das Profilbild
     }
   }, [userInfo]);
 
+  // Funktion zur Validierung der Profiländerungen
   const validateProfile = () => {
     if (!firstName) {
       toast.error("First Name is required.");
@@ -47,9 +55,11 @@ const Profile = () => {
     return true;
   }
 
+  // Funktion zum Speichern der Änderungen
   const saveChanges = async () => {
     if (validateProfile()) {
       try {
+        // Sende eine Anfrage zur Aktualisierung des Profils
         const response = await apiClient.post(UPDATE_PROFILE_ROUTE, { firstName, lastName, color: selectColor }, { withCredentials: true });
         if (response.status === 200 && response.data) {
           setUserInfo({ ...response.data });
@@ -60,7 +70,6 @@ const Profile = () => {
         console.log(error);
       }
     }
-
   };
 
   //Wenn der Profile Setup fertig, dann leite zur Chat Seite weiter sonst gebe eine Fehlermeldung (Für den Arrow gedacht)
@@ -70,33 +79,34 @@ const Profile = () => {
     } else {
       toast.error("Please setup profile.");
     }
-
   }
 
+  // Funktion, um das Datei-Eingabefeld für das Hochladen eines neuen Profilbildes zu öffnen
   const handleFileInputClick = () => {
     fileInputRef.current.click();
   };
 
+  // Funktion, um das Profilbild zu ändern
   const handleImageChange = async (event) => {
-    const file = event.target.files[0];
-    console.log({file});
-    if(file) {
+    const file = event.target.files[0];   // Holt die hochgeladene Datei
+    console.log({ file });
+    if (file) {
       const formData = new FormData();
-      formData.append("profile-image", file);
-      const response = await apiClient.post(ADD_PROFILE_IMAGE_ROUTE, formData, {withCredentials:true});
+      formData.append("profile-image", file);   // Fügt die Bilddatei zu den Formulardaten hinzu
+      const response = await apiClient.post(ADD_PROFILE_IMAGE_ROUTE, formData, { withCredentials: true });
       if (response.status === 200 && response.data.image) {
-        setUserInfo({...userInfo, image: response.data.image});
+        setUserInfo({ ...userInfo, image: response.data.image });
         toast.success("Image updated successfully.");
       }
-      
     }
   };
 
+  // Funktion, um das Profilbild zu löschen
   const handleDeleteImage = async () => {
     try {
-      const response =await apiClient.delete(REMOVE_PROFILE_IMAGE_ROUTE, {withCredentials:true,});
-      if(response.status===200) {
-        setUserInfo({...userInfo, image: null});
+      const response = await apiClient.delete(REMOVE_PROFILE_IMAGE_ROUTE, { withCredentials: true, });
+      if (response.status === 200) {
+        setUserInfo({ ...userInfo, image: null });  // Löscht das Bild aus den Benutzerdaten
         toast.success("Image removed sucessfully");
         setImage(null);
       }
@@ -116,45 +126,50 @@ const Profile = () => {
             <Avatar className="h-32 w-32 md:w-48 md:h-48 rounded-full overflow-hidden">
               {
                 image ? (
-                  <AvatarImage src={image} alt="profile" className="object-cover w-full h-full bg-black" /> ) : (
+                  <AvatarImage src={image} alt="profile" className="object-cover w-full h-full bg-black" />) : (
                   <div className={`uppercase h-32 w-32 md:w-48 md:h-48 text-5xl border-[1px] flex items-center justify-center rounded-full ${getColor(selectColor)}`}>
                     {firstName ? firstName.split("").shift() : userInfo.email.split("").shift()}
                   </div>
-              )}
+                )}
             </Avatar>
-            {
-              hovered && (
-                <div className="absolute inset-0 flex items-center justify-center bg-black/50 ring-fuchsia-50 rounded-full" onClick={image ? handleDeleteImage : handleFileInputClick}>
-                  {
-                    image ? ( <FaTrash className="text-white text-3xl cursor-pointer" /> ) : ( <FaPlus className="text-white text-3xl cursor-pointer" />
+
+            {/* Hover-Effekt für das Profilbild */}
+            {hovered && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/50 ring-fuchsia-50 rounded-full" onClick={image ? handleDeleteImage : handleFileInputClick}>
+                {
+                  image ? (<FaTrash className="text-white text-3xl cursor-pointer" />) : (<FaPlus className="text-white text-3xl cursor-pointer" />
                   )}
-                </div>      
-              )
+              </div>
+            )
             }
-            {
-              <input type="file" ref={fileInputRef} className="hidden" onChange={handleImageChange} name="profile-image" accept=".png, .jpg, .jpeg, .svg, .webp" />
+            {/* Verstecktes Datei-Eingabefeld */}
+            {<input type="file" ref={fileInputRef} className="hidden" onChange={handleImageChange} name="profile-image" accept=".png, .jpg, .jpeg, .svg, .webp" />
             }
           </div>
           <div className="flex min-w-32 md:min-w-64 flex-col gap-5 text-white items-center justify-center">
+            {/* E-Mail */}
             <div className="w-full">
               <Input placeholder="Email" type="email" disabled value={userInfo.email} className="rounded-lg p-6 bg-[#2c2e3b] border-none" />
             </div>
+            {/* Vorname Eingabe */}
             <div className="w-full">
               <Input placeholder="First Name" type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} className="rounded-lg p-6 bg-[#2c2e3b] border-none" />
             </div>
+            {/* Nachname Eingabe */}
             <div className="w-full">
               <Input placeholder="Last Name" type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} className="rounded-lg p-6 bg-[#2c2e3b] border-none" />
             </div>
+            {/* Farbwahl */}
             <div className="w-full flex gap-5">
               {
                 colors.map((color, index) => (
                   <div className={`${color} h-8 w-8 rounded-full cursor-pointer transition-all duration-300 ${selectColor === index ? "outline outline-white/80 " : ""} }`} key={index} onClick={() => setSelectedColor(index)}>
-
                   </div>))
               }
             </div>
           </div>
         </div>
+        {/* Speichern-Button */}
         <div className="w-full">
           <Button className="h-16 w-full bg-red-500 hover:bg-red-900 transition-all duration-300" onClick={saveChanges}>
             Save Changes
