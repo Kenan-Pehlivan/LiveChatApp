@@ -44,10 +44,27 @@ export const SocketProvider = ({ children }) => {
 
             //Handler für den Empfang von Nachrichten
             const handleRecieveMessage = (message) => {
-                const { selectedChatData, selectedChatType, addMessage } = useAppStore.getState();
+
+                const { selectedChatData, selectedChatType, addMessage, setDirectMessagesContacts, directMessagesContacts, userId } = useAppStore.getState();
                 // Wenn der Nachrichtensender oder Empfänger dem aktuellen Chat entspricht, wird die Nachricht hinzugefügt
                 if (selectedChatType !== undefined && (selectedChatData._id === message.sender._id || selectedChatData._id === message.recipient._id)) {
                     addMessage(message); //Nachrichten im Store hinzufügen
+                }
+
+            
+                let newContact = null;
+                if (message.sender._id !== userInfo.id) {
+                    newContact = message.sender;
+                } else if (message.recipient._id !== userInfo.id) {
+                    newContact = message.recipient;
+                }
+
+                //Wenn der Konkt nicht im Zustand gibt, dann füge es ein
+                if (newContact) {
+                    const isAlreadyAdded = directMessagesContacts.some(c => c._id === newContact._id);
+                    if (!isAlreadyAdded) {
+                        setDirectMessagesContacts([...directMessagesContacts, newContact]);
+                    }
                 }
             };
             // Handler für den Empfang von Nachrichten in einem Kanal
