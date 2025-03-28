@@ -1,4 +1,4 @@
-![Logo](https://cdn.discordapp.com/attachments/1286389716551467008/1352599651718660167/ReadMeLogo.png?ex=67de9a17&is=67dd4897&hm=5981e3842374e2746a6af02917ebc2ec0b2f29e8624177fc161e42690863b8a9&)
+![Logo](ReadMeLogo.png)
 
 
   ## **1. Projektbeschreibung** 
