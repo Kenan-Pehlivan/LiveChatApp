@@ -1,0 +1,7 @@
+
+{
+"thema": "LiveChatApp-DHBW-Chatty",
+"kurs": "WWI2023V",
+"teilnehmer": "Chanpreet Singh (1156634.), Kenan Pehlivan (4976301), Sven Fritzler (5939158)",
+"kurzbeschreibung": "DHBW Chatty ist eine Live-Chat-App für Echtzeitkommunikation mit hoher Sicherheit und Performance. Sie unterstützt Direktnachrichten, Gruppenchats, Datei- und Medienversand sowie Profilanpassungen. Die Anwendung basiert auf einer containerisierten Microservice-Architektur mit Docker und Load Balancer für hohe Verfügbarkeit. Sicherheitsmechanismen wie bcrypt-Hashing, JWT-Authentifizierung und NoSQL-Injection-Schutz sind integriert. Redis verbessert das Session-Management und die WebSocket-Verwaltung für stabile Live-Kommunikation."
+}
