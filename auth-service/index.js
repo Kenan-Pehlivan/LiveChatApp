@@ -1,3 +1,8 @@
+/*  Veränderungsdatum: 21.03.2025 
+    Diese Datei ist dir Hauptserver-datei für die Auth-service.
+    Sie konfiguriert, startet und verbindet den Server mit MongoDB.
+*/
+
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";

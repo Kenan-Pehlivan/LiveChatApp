@@ -1,3 +1,8 @@
+/*  Veränderungsdatum: 29.03.2025 
+    Diese Datei ist dir Hauptserver-datei für die Channel-service.
+    Sie konfiguriert, startet und verbindet den Server mit MongoDB.
+*/
+
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
