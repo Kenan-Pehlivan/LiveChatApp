@@ -17,29 +17,36 @@ const authRoutes = Router();
 
 // Definiert die Konfiguration für das Hochladen von Profilbildern mit Multer
 const upload = multer({ dest: "/upload/profiles/" });  // Pfad anpassen
-/*
 const redisClient = new Redis({
     host: "redis", // Name des Redis-Containers aus Docker Compose
     port: 6379,            // Standard-Port für Redis
     enableOfflineQueue: false // Verhindert das Zwischenspeichern von Befehlen, falls Redis nicht erreichbar ist
 });
 
-// Definiert die Rate-Limitierung für den Login-Versuch (maximal 3 Versuche alle 15 Minuten)
-const loginLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 Minuten
-    max: 3,
-    message: "Zu viele Login-Versuche. Bitte versuche es später erneut.",
-    store: new RateLimitRedisStore({
-        sendCommand: (...args) => redisClient.call(...args),
-        prefix: "login_limit:" // Einzigartiger Präfix für Login
-    }),
-});
+redisClient.on("ready", () => {
+    console.log("Redis is ready");
 
-*/
+    // Definiert die Rate-Limitierung für den Login-Versuch (maximal 3 Versuche alle 15 Minuten)
+    const loginLimiter = rateLimit({
+        windowMs: 15 * 60 * 1000, // 15 Minuten
+        max: 3,
+        message: "Zu viele Login-Versuche. Bitte versuche es später erneut.",
+        keyGenerator: (req, res) => {
+            // Verwende den Benutzernamen aus dem Request-Body
+            return req.body.username || req.ip; // fallback auf IP falls username fehlt
+        },
+        store: new RateLimitRedisStore({
+            sendCommand: (...args) => redisClient.call(...args),
+            prefix: "login_limit:"
+        }),
+    });
+    // Route für den Login mit einer Rate-Limitierung
+    authRoutes.post("/login", loginLimiter, login);
+});
 // Route für die Benutzerregistrierung
 authRoutes.post("/signup", signup);
-// Route für den Login mit einer Rate-Limitierung
-authRoutes.post("/login", login);
+
+//authRoutes.post("/login", login);
 // Route für das Abrufen von Benutzerdaten, nur für authentifizierte Benutzer
 authRoutes.get("/user-info", verifyToken, getUserInfo);
 // Route für das Aktualisieren von Benutzerprofilinformationen
