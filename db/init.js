@@ -2,6 +2,12 @@
 
 db = db.getSiblingDB("chat-app"); // Stellt sicher, dass die richtige DB verwendet wird
 
+db.createUser({
+  user: "dbuser",
+  pwd: "trustdbuser",
+  roles: [{ role: "readWrite", db: "chat-app" }]
+});
+
 // Nutzer-Daten importieren
 db.users.insertMany([
   {

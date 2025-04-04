@@ -23,7 +23,7 @@ app.use(cookieParser());
 app.use("/api/messages", messagesRoutes);
 
 mongoose.connect(process.env.DATABASE_URL)
-    .then(() => console.log("Auth DB connected"))
+    .then(() => console.log("Message DB connected"))
     .catch(err => console.log(err));
 
-app.listen(port, () => console.log(`Auth Service läuft auf Port ${port}`));
+app.listen(port, () => console.log(`Message Service läuft auf Port ${port}`));

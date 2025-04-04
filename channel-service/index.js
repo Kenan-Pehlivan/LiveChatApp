@@ -24,4 +24,4 @@ mongoose.connect(process.env.DATABASE_URL)
     .then(() => console.log("Channel DB connected"))
     .catch(err => console.log(err));
 
-app.listen(port, () => console.log(`Auth Service läuft auf Port ${port}`))
+app.listen(port, () => console.log(`Channel Service läuft auf Port ${port}`))

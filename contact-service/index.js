@@ -22,7 +22,7 @@ app.use(cookieParser());
 app.use("/api/contacts", contactsRoutes);
 
 mongoose.connect(process.env.DATABASE_URL)
-    .then(() => console.log("Auth DB connected"))
+    .then(() => console.log("Contact DB connected"))
     .catch(err => console.log(err));
 
-app.listen(port, () => console.log(`Auth Service läuft auf Port ${port}`));
+app.listen(port, () => console.log(`Contact Service läuft auf Port ${port}`));
