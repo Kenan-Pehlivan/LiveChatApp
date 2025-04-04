@@ -17,4 +17,4 @@ RUN npm install bcrypt --build-from-source
 
 EXPOSE 8750
 
-CMD ["npm", "run", "dev"]
+CMD ["npm", "start"]
