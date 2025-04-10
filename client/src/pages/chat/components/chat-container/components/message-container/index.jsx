@@ -164,10 +164,13 @@ const MessageContainer = () => {
                 </span>
               </div>
             )}
+            
+            {/*
             <div className="text-xs text-gray-600">
               {moment(message.timestamp).format("LT")}
             </div>
-          </div>
+  */}
+          </div> 
         )}
         <div className="text-xs text-gray-600 mt-1">
           {moment(message.timestamp).format("LT")}
@@ -253,10 +256,11 @@ const MessageContainer = () => {
                 </span>
               </div>
             )}
-            {/* Anzeige des Zeitstempels der Nachricht */}
+            {/* Anzeige des Zeitstempels der Nachricht 
             <div className="text-xs text-gray-600">
               {moment(message.timestamp).format("LT")}
             </div>
+            */}
           </div>
         )}
 
